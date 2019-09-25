@@ -1,0 +1,63 @@
+ 
+/****************************************************
+             code from scratch...
+      coded by ujjawal_singh on dated 25/09/2019
+     
+***************************************************** */
+  
+#include<bits/stdc++.h>
+#include<iostream>
+#define ll long long int
+#define ip(n) cin>>n;
+#define ipn() ll n;ip(n);ll arr[n];for(int i=0;i<n;i++)ip(arr[i])
+#define fo(i, a, b) for (int i = (a); i < int(b); i++)
+#define rep(i, n) fo(i, 0, n)
+#define pr1(n) cout<<n<<endl
+#define pr2(a,b) cout<<a<<" "<<b<<endl
+#define fast ios_base::sync_with_stdio(false), cin.tie(NULL)
+using namespace std;
+ll k;
+string str1,str2;
+void build()
+{
+    
+}
+
+//recursive function for calculating lcs...
+ll func(ll a,ll b)
+{
+    if(a==0||b==0)
+    return(0);
+    if(str1[a-1]==str2[b-1])
+    return(1+func(a-1,b-1));
+    else
+    return(max(func(a-1,b),func(a,b-1)));
+}
+ 
+int main()
+{
+    
+    ll t;
+    ip(t);
+    while(t--)
+    {
+        ll a,b;
+        ip(a);ip(b);
+        ip(str1);ip(str2);
+        ll arr[a+1][b+1];
+        rep(i,a+1)
+        arr[i][0]=0;
+        rep(i,b+1)
+        arr[0][i]=0;
+        fo(i,0,a)
+        fo(j,0,b)
+        {
+            if(str2[j]==str1[i])
+            arr[i+1][j+1]=1+arr[i][j];
+            else
+            arr[i+1][j+1]=max(arr[i+1][j],arr[i][j+1]);
+        }
+        pr1(arr[a][b]);
+    }
+    return(0);
+}
