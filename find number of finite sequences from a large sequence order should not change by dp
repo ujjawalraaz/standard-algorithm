@@ -1,0 +1,55 @@
+
+
+//CODEFORCES PROBLEM :1176C - Lose it!
+
+
+
+/****************************************************
+             code from scratch...
+      coded by ujjawal_singh on dated 20/10/2019
+     
+***************************************************** */
+  
+#include<bits/stdc++.h>
+#include<iostream>
+#define ll long long int
+#define ip(n) cin>>n;
+#define ipn() ll n;ip(n);ll arr[n];for(int i=0;i<n;i++)ip(arr[i])
+#define fo(i, a, b) for (int i = (a); i < int(b); i++)
+#define rep(i, n) fo(i, 0, n)
+#define pr1(n) cout<<n<<endl
+#define pr2(a,b) cout<<a<<" "<<b<<endl
+#define fast ios_base::sync_with_stdio(false), cin.tie(NULL)
+#define mem(arr,i) memset(arr,i,sizeof(arr))
+using namespace std;
+ll M=1000000007;
+void build()
+{
+    
+}
+
+
+
+int main()
+{
+     ipn();
+     vector<ll> v1({4,8,15,16,23,42});
+     rep(i,n)
+     arr[i]=lower_bound(v1.begin(),v1.end(),arr[i])-v1.begin();
+     vector<ll> v2(6);
+     rep(i,n)
+     {
+           if(arr[i]==0)
+           v2[0]++;
+           else
+           {
+                 if(v2[arr[i]-1]>0)
+                 {
+                       v2[arr[i]]++;
+                       v2[arr[i]-1]--;
+                 }
+           }
+     }
+     pr1(n-v2[5]*6);
+     return(0);
+}
