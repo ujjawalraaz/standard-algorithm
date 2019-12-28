@@ -1,0 +1,64 @@
+/*
+
+     coded by ujjawal_singh
+     data:28/12/2019...
+     
+*/
+
+/*
+actually we can do it by simply sort the array and pick k element .
+and we know this algorithm will take o(nlogn) time .I can do it in 
+o(klogn) time coz we know constructing a heap will take o(n) time 
+and we apply k times extractMax operation which take o(logn) time
+
+means total time complexity is o(k*logn) time
+*/
+
+#include<iostream>
+#define ll long long int
+using namespace std;
+
+void heapify(ll arr[],ll n,ll i)
+{
+    ll largest=i;
+    ll l=2*i+1;
+    ll r=2*i+2;
+    if(l<n&&arr[l]>arr[largest])
+    largest=l;
+    if(r<n&&arr[r]>arr[largest])
+    largest=r;
+    if(largest!=i)
+    {
+        swap(arr[i],arr[largest]);
+        heapify(arr,n,largest);
+    }
+}
+
+void build_maxheap(ll arr[],ll n)
+{
+    for(int i=n/2-1;i>=0;i--)
+    heapify(arr,n,i);
+}
+
+int main()
+{
+    ll t;
+    cin>>t;
+    while(t--)
+    {
+        ll n,k;
+        cin>>n>>k;
+        ll arr[n];
+        for(int i=0;i<n;i++)
+        cin>>arr[i];
+        build_maxheap(arr,n);    //takes o(n)
+        for(int i=0;i<k;i++)
+        {
+            cout<<arr[0]<<" ";
+            arr[0]=arr[n-1-i];
+            heapify(arr,n-1-i,0);//takes o(logn)
+        }
+        cout<<endl;
+    }
+    return(0);
+}
