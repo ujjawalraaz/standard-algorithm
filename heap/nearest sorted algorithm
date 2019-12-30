@@ -1,0 +1,72 @@
+we can make it by instertion sortand time complexity will be O(n*k)
+we can do it in O(n*log(k)) by using heap ..
+link:https://www.geeksforgeeks.org/nearly-sorted-algorithm/
+
+CODE:
+*****
+       coded by ujjawal_singh
+       date-31/12/2019
+*****
+
+#include<iostream>
+#define ll long long int
+using namespace std;
+void swap(ll *a,ll *b)
+{
+    ll t=*a;
+    *a=*b;
+    *b=t;
+}
+
+void heapify(ll arr[],ll k,ll i)
+{
+    ll smallest=i;
+    ll l=2*i+1;
+    ll r=2*i+2;
+    if(l<k&&arr[l]<arr[smallest])
+    smallest=l;
+    if(r<k&&arr[r]<arr[smallest])
+    smallest=r;
+    if(smallest!=i)
+    {
+        swap(&arr[i],&arr[smallest]);
+        heapify(arr,k,smallest);
+    }
+}
+
+int main()
+{
+    ll t;
+    cin>>t;
+    while(t--)
+    {
+        ll n,k;
+        cin>>n>>k;
+        ll arr[n];
+        ll arr1[n];
+        for(int i=0;i<n;i++)
+        cin>>arr[i];
+        for(int i=(k+1)/2-1;i>=0;i--)
+        heapify(arr,k+1,i);
+        ll k1=k+1;
+        for(int i=0;i<n;i++)
+        {
+            arr1[i]=arr[0];
+            if(k1<n){
+            arr[0]=arr[k1];
+            k1++;
+            heapify(arr,k+1,0);
+            }
+            else
+            {
+                arr[0]=arr[k];
+                k--;
+                heapify(arr,k+1,0);
+            }
+        }
+        for(int i=0;i<n;i++)
+        cout<<arr1[i]<<" ";
+        cout<<endl;
+    }
+    return(0);
+}
