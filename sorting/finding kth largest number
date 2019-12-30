@@ -1,0 +1,148 @@
+we can do this question by many approach :
+method-1:
+In this method we simply sort the array and find arr[k-1] value.
+time complexity-o(nlogn)
+
+method-2:
+In this method we can make a min heap in o(n) time like
+void buildMinheap(int arr[],int n)
+{
+    for(int i=n/2-1;i>=0;i--)
+    heapify(arr,n,i);
+}
+void heapify(int arr[],int n,int root)
+{
+    int smallest=root;
+    int l=2*root+1;
+    int r=2*root+2;
+    if(l<n&&arr[l]<arr[root])
+    smallest=l;
+    if(r<n&&arr[r]<arr[smallest])
+    smallest=r;
+    if(smallest!=root)
+    heapify(arr,n,smallest);
+}
+After making min we should do k times extractMin() operation and after that arr[0] i mean root element is kth largest element...
+void extractMin(int arr[])
+{
+   for(int i=n-1;i>k;i--)
+   {
+      swap(arr[0],arr[i]);
+      heapify(arr,i,0);//o(logn)
+   }
+}
+Now our answer is arr[0]
+time complexity:O(n)+O(k*log(n))
+
+method-3:
+In this method we can make a max heap of first k element of array like
+void buildMinheap(int arr[],int n)
+{
+    for(int i=n/2-1;i>=0;i--)
+    heapify(arr,n,i);
+}
+After making max heap we match rest n-k value with root of array if that element is less than root of heap then replace root by that 
+value and heapify the heap otherwise leave it.After n-k operation we get our desired result at root of our heap.
+time complexity:O(k)+O((n-k)*log(k))
+
+method-4:
+In this method we use quick sort algorithm.The idea is not to use whole quicksort algorithm.not to go for both side .go anyone side 
+depending upon index of pivot element like:
+int partition(int arr[],int low,int high)
+{
+    int pivot=arr[high];
+    int i=low-1;
+    for(int j=low;j<high;j++)
+    {
+        if(arr[j]<=pivot)
+        {
+            i++;
+            swap(&arr[i],&arr[j]);
+        }
+    }
+    i++;
+    swap(&arr[i],arr[high]);
+    return(i);
+}
+int kthLargest(int arr[],int low,int high,int k)
+{
+    int pos=partition(arr,low,high);
+    if(pos-l==k-1)
+    return(arr[pos]);
+    if(pos-l>k-1)
+    return(kthLargest(arr,low,pos-1,k);
+    else
+    return(kthLargest(arr,pos+1,high,k-(pos-l)-1));
+}
+time complexity:O(n*log(n))
+
+method-5:
+In this method we randomly select pivot element all things are same .
+In wrost case it takes O(n2) but on avarage it takes O(n) time.
+Excepted linear time solution.
+This method is best convient among all above.
+#include<iostream>
+#define ll long long int
+using namespace std;
+
+void swap(ll* a, ll* b)  
+{  
+    ll t = *a;  
+    *a = *b;  
+    *b = t;  
+}  
+
+ll partition(ll arr[],ll low,ll high)
+{
+    ll pivot=arr[high];
+    int i=low-1;
+    for(int j=low;j<high;j++)
+    {
+        if(arr[j]<=pivot)
+        {
+            i++;
+            swap(&arr[j],&arr[i]);
+        }
+    }
+    i++;
+    swap(&arr[i],&arr[high]);
+    return(i);
+}
+
+ll randPartition(ll arr[],ll l,ll r)
+{
+    ll n=r-l+1;
+    ll m=rand() % n;
+    swap(&arr[l+m],&arr[r]);
+    return(partition(arr,l,r));
+}
+
+
+ll kthLargest(ll arr[],ll l,ll r,ll k)
+{
+    ll pos=randPartition(arr,l,r);
+    if(pos-l==k-1)
+    return(arr[pos]);
+    if(pos-l<k-1)
+    return(kthLargest(arr,pos+1,r,k-(pos-l)-1));
+    else
+    return(kthLargest(arr,l,pos-1,k));
+}
+
+int main()
+{
+    ll t;
+    cin>>t;
+    while(t--)
+    {
+        ll n;
+        cin>>n;
+        ll arr[n];
+        for(int i=0;i<n;i++)
+        cin>>arr[i];
+        ll k;
+        cin>>k;
+        cout<<kthLargest(arr,0,n-1,k)<<endl;
+    }
+    return(0);
+}
