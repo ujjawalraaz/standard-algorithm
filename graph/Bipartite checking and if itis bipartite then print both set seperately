@@ -7,8 +7,8 @@
 #define ll long long int
 using namespace std;
 vector<vector<ll>> v1;
-ll n1;
-void checkBipartite(ll n,ll color[],ll visited[])
+
+bool checkBipartite(ll n,ll color[],ll visited[])
 {
     visited[n]=1;
     for(int i=0;i<v1[n].size();i++)
@@ -16,12 +16,14 @@ void checkBipartite(ll n,ll color[],ll visited[])
         if(visited[v1[n].at(i)]==0)
         {
             color[v1[n].at(i)]=1-color[n];
-            checkBipartite(v1[n].at(i),color,visited);
+            if(checkBipartite(v1[n].at(i),color,visited))
+            return(true);
         }
         else
-        if(color[v1[n].at(i)]==color[n])
-        color[n1]=4;
+        if(color[v1[n].at(i)]==color[n]){
+        return(true);}
     }
+    return(false);
 }
 
 int main()
@@ -30,7 +32,6 @@ int main()
     cin>>n>>m;
     v1.resize(n+5);
     ll u,v;
-    n1=n+1;
     for(int i=0;i<m;i++)
     {
         cin>>u>>v;
@@ -50,13 +51,13 @@ int main()
         if(visited[i]==0)
         {
            color[i]=1;
-           checkBipartite(i,color,visited);
+           if(checkBipartite(i,color,visited))
+           {
+               cout<<-1<<endl;
+               return(0);
+           }
         }
     }
-    if(color[n1]==4)
-    cout<<-1<<endl;
-    else
-    {
         int zero=0,one=0;
         for(int i=1;i<=n;i++)
         {
@@ -75,6 +76,5 @@ int main()
         if(color[i]==1)
         cout<<i<<" ";
         cout<<endl;       
-    }
     return(0);
 }
