@@ -1,0 +1,83 @@
+/*
+     coded by ujjawal_singh...
+     date:04/01/2020
+     
+     
+     question Link:https://codeforces.com/contest/1249/problem/B2
+     
+*/
+
+
+#include<iostream>
+#include<vector>
+#define ll long long int
+using namespace std;
+
+ll findParent(ll i,ll parent[])
+{
+    if(parent[i]==i)
+    return(i);
+    else
+    {
+          return(findParent(parent[i],parent));
+    }
+}
+
+void union1(ll parent[],ll rank[],ll ans[],ll a,ll b)
+{
+    ll pa=findParent(a,parent);
+    ll pb=findParent(b,parent);
+    if(pa==pb)
+    return;
+    if(rank[pa]<rank[pb]){
+    parent[pa]=pb;
+    ans[pb]=ans[pb]+ans[pa];}
+    else
+    {
+        if(rank[pa]>rank[pb]){
+        parent[pb]=pa;
+        ans[pa]=ans[pa]+ans[pb];}
+        else
+        {
+            parent[pb]=pa;
+            rank[pa]=rank[pa]+1;
+            ans[pa]=ans[pa]+ans[pb];
+        }
+    }
+}
+
+int main()
+{
+    ll q;
+    cin>>q;
+    while(q--)
+    {
+        ll n;
+        cin>>n;
+        ll arr[n+1];
+        for(ll i=1;i<=n;i++)
+        {
+            cin>>arr[i];
+        }
+        ll parent[n+1];
+        ll rank[n+1];
+        ll ans[n+1];
+        for(ll i=0;i<=n;i++){
+        parent[i]=i;
+        rank[i]=1;
+        ans[i]=1;
+        }
+        //now we trying to do union operation for connected componant...
+        for(ll i=1;i<=n;i++)
+        {
+            union1(parent,rank,ans,i,arr[i]);
+        }
+        for(ll i=1;i<=n;i++)
+        {
+            ll p=findParent(i,parent);
+            cout<<ans[p]<<" ";
+        }
+        cout<<endl;
+    }
+    return(0);
+}
