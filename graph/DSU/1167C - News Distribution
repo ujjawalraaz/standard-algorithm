@@ -1,0 +1,87 @@
+/*
+       CODED BY :ujjawal_singh
+       DATED    :05/01/2020
+       
+       question link:https://codeforces.com/problemset/problem/1167/C
+       
+*/
+
+
+
+#include<iostream>
+#include<vector>
+#define ll long long int
+using namespace std;
+vector<ll> parent;
+vector<ll> rnk;
+vector<ll> ans;
+ 
+ 
+ll findParent(ll n)
+{
+    if(parent[n]==n)
+    return(n);
+    else
+    {
+        parent[n]=findParent(parent[n]);
+        return(parent[n]);
+    }
+}
+ 
+void union1(ll x,ll y)
+{
+    ll a=findParent(x);
+    ll b=findParent(y);
+    if(a==b)
+    return;
+    if(rnk[a]>rnk[b]){
+    parent[b]=a;
+    ans[a]=ans[a]+ans[b];
+    }
+    else
+    {
+        ans[b]=ans[b]+ans[a];
+        parent[a]=b;
+        if(rnk[a]==rnk[b])
+        rnk[b]=rnk[b]+1;   
+    }
+}
+ 
+int main()
+{
+    ll n,m;
+    cin>>n>>m;
+    ll u,v;
+    parent.resize(n+5);
+    rnk.resize(n+5);
+    ans.resize(n+5);
+    for(int i=0;i<=n;i++)
+    {
+        parent[i]=i;
+        rnk[i]=0;
+        ans[i]=1;
+    }
+    
+    for(int i=0;i<m;i++)
+    {
+        ll k;
+        cin>>k;
+        if(k==0)
+        continue;
+        else
+        {
+           cin>>u;
+           for(int j=1;j<k;j++)
+           {
+               cin>>v;
+               union1(u,v);
+           }
+        }
+    }
+    for(int i=1;i<=n;i++)
+    {
+        cout<<ans[findParent(i)]<<" ";
+    }
+    cout<<endl;
+    return(0);
+}
