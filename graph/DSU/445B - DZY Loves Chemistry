@@ -1,0 +1,78 @@
+//question link:https://codeforces.com/problemset/problem/445/B
+
+
+#include<iostream>
+#include<vector>
+#define ll long long int
+using namespace std;
+vector<ll> parent;
+vector<ll> rnk;
+vector<ll> number;
+vector<ll> visited;
+
+ll findParent(ll n)
+{
+    if(n==parent[n])
+    return(n);
+    else
+    {
+       parent[n]=findParent(parent[n]);
+       return(parent[n]);
+    }
+}
+
+void union1(ll x,ll y)
+{
+    ll a=findParent(x);
+    ll b=findParent(y);
+    if(a==b)
+    return;
+    if(rnk[a]<rnk[b])
+    {
+        parent[a]=b;
+        number[b]=number[b]+number[a];
+    }
+    else
+    {
+        parent[b]=a;
+        number[a]=number[a]+number[b];
+        if(rnk[a]==rnk[b])
+        rnk[a]=rnk[a]+1;
+    }
+}
+
+int main()
+{
+    ll n,m,u,v;
+    cin>>n>>m;
+    parent.resize(n+5);
+    rnk.resize(n+5);
+    number.resize(n+5);
+    visited.resize(n+5);
+    for(int i=0;i<=n;i++)
+    {
+        parent[i]=i;
+        rnk[i]=0;
+        number[i]=1;
+        visited[i]=0;
+    }
+    for(int i=0;i<m;i++)
+    {
+        cin>>u>>v;
+        union1(u,v);
+    }
+    ll count=0;
+    for(int i=1;i<=n;i++)
+    {
+        ll k=findParent(i);
+        if(visited[k]==0)
+        {
+            count=count+number[k]-1;
+            visited[k]=1;
+        }
+    }
+    ll ans=1;
+    ans=ans<<count;
+    cout<<ans<<endl;
+    return(0);
+}
