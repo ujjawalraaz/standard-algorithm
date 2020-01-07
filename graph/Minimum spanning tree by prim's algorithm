@@ -1,0 +1,37 @@
+int pickElement(int n,int dist[],int visited[])  
+{  
+    // Initialize min value  
+    int min = INT_MAX, min_index;  
+  
+    for (int v = 0; v < n; v++)  
+        if (visited[v] == 0 && dist[v] < min)  
+            min = dist[v], min_index = v;  
+  
+    return min_index;  
+} 
+
+int spanningTree(int n,int e,vector<vector<int> > v1)
+{
+    // code here
+    int dist[n];
+    for(int i=0;i<=n;i++)
+    dist[i]=INT_MAX;
+    dist[0]=0;
+    int visited[n]={0};
+    for(int i=0;i<n;i++)
+    {
+        int m=pickElement(n,dist,visited);
+        visited[m]=1;
+        for(int j=0;j<n;j++)
+        {
+            if(visited[j]==0&&!v1[m][j]&&dist[j]>v1[m][j])
+            {
+                dist[j]=v1[m][j];      
+            }
+        }
+    }
+    int sum=0;
+    for(int i=0;i<n;i++)
+    sum=sum+dist[i];
+    return(sum);
+}
