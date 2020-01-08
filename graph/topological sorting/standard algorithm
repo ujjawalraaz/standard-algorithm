@@ -63,6 +63,9 @@ Method-2:
                       
                       
   */
+  
+ // time complexity:O(V+E)
+  
   int* topoSort(int n, vector<int> adj[])
 {
     // Your code here
