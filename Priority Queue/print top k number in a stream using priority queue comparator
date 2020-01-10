@@ -1,0 +1,47 @@
+
+//question link:https://practice.geeksforgeeks.org/problems/top-k-numbers/0
+
+
+#include<iostream>
+#include<queue>
+#include<vector>
+#include<unordered_map>
+#include<utility>
+#define ll long long int
+#define ppi pair<ll,ll>
+using namespace std;
+class comparator
+{
+  public:
+  ll operator()(const ppi a,const ppi b)
+  {
+      if(a.second==b.second)
+      return(a.first>b.first);
+      return(a.second<b.second);
+  }
+};
+
+
+int main()
+{
+    ll n,k,t;
+    cin>>t;
+    while(t--){
+    cin>>n>>k;
+    ll x;
+    unordered_map<ll,ll> umap;
+    for(int i=0;i<n;i++){
+    cin>>x;
+    umap[x]++;
+    priority_queue<ppi,vector<ppi>,comparator> pq(umap.begin(),umap.end());
+    ll count=0;
+    while(!pq.empty()&&count<k)
+    {
+        cout<<pq.top().first<<" ";
+        pq.pop();
+        count++;
+    }
+    }
+    cout<<endl;
+    }
+}
