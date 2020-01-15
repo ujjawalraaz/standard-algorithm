@@ -1,0 +1,42 @@
+//qs Link:https://practice.geeksforgeeks.org/problems/longest-prefix-suffix/0
+
+#include<iostream>
+#define ll long long int
+using namespace std;
+int main()
+{
+    ll t;
+    cin>>t;
+    while(t--)
+    {
+        string str;
+        cin>>str;
+        ll lps[str.size()];
+        lps[0]=0;
+        ll len=0;
+        int i=1;
+        while(i<str.size())
+        {
+            if(str[i]==str[len])
+            {
+                len++;
+                lps[i]=len;
+                i++;
+            }
+            else
+            {
+                if(len==0)
+                {
+                    lps[i]=0;
+                    i++;
+                }
+                else
+                {
+                    len=lps[len-1];
+                }
+            }
+        }
+        cout<<lps[str.size()-1]<<endl;
+    }
+    return(0);
+}
