@@ -1,0 +1,103 @@
+
+//qs link:https://codeforces.com/problemset/problem/1137/B
+
+
+#include<iostream>
+#define ll long long int
+using namespace std;
+int main()
+{
+    string s,t;
+    cin>>s;
+    ll n=s.size();
+    ll zero=0,one=0;
+    for(int i=0;i<n;i++)
+    if(s[i]=='0')
+    zero++;
+    else
+    one++;
+    cin>>t;
+    ll len=0;
+    ll one1=0,zero1=0;
+    ll n1=t.size();
+    ll arr[n1];
+    arr[0]=0;
+    ll j=1;
+    while(j<n1)
+    {
+              if(t[j]==t[len])
+              {
+                        len++;
+                        arr[j]=len;
+                        j++;
+              }
+              else
+              {
+                        if(len==0)
+                        {
+                                  arr[j]=0;
+                                  j++;
+                        }
+                        else
+                        len=arr[len-1];
+              }
+    }
+    ll lps=arr[n1-1];
+    for(int i=0;i<n1;i++)
+    if(t[i]=='0')
+    zero1++;
+    else
+    one1++;
+    if(zero1>zero || one1>one)
+    {
+        cout<<s<<endl;
+        return(0);
+    }
+    if(zero==zero1&&one==one1)
+    {
+        cout<<t<<endl;
+        return(0);
+    }
+    ll h=0;
+    ll one2=0,zero2=0;
+    for(int i=0;i<lps;i++)
+    if(t[i]=='0')
+    zero2++;
+    else
+    one2++;
+    while(((zero+zero2)>=zero1)&&((one+one2)>=one1))
+    {
+        if(lps==0||h==0){
+        cout<<t;
+        h=1;
+        zero=zero-zero1;
+        one=one-one1;
+        }
+        else
+        {
+             for(int i=lps;i<n1;i++)
+             {
+                       cout<<t[i];
+                       if(t[i]=='0')
+                       zero--;
+                       else
+                       one--;
+             }
+             //cout<<"KEWF"<<endl;
+        }
+    }
+    while(zero>0||one>0)
+    {
+        if(zero>0)
+        {
+            cout<<"0";
+            zero--;
+        }
+        if(one>0)
+        {
+            cout<<"1";
+            one--;
+        }
+    }
+    return(0);
+}
