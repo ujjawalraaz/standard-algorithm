@@ -1,0 +1,48 @@
+
+//resource:https://www.geeksforgeeks.org/largest-rectangle-under-histogram/
+
+#include<iostream>
+#include<stack>
+#define ll long long int
+using namespace std;
+int main()
+{
+    ll t;
+    cin>>t;
+    while(t--)
+    {
+        ll n;
+        cin>>n;
+        ll arr[n];
+        for(ll i=0;i<n;i++)
+        cin>>arr[i];
+        stack<ll> s1;
+        ll max_area=0;
+        ll area=0;
+        ll i=0;
+        ll tp;
+        while(i<n)
+        {
+            if(s1.empty()||arr[i]>=arr[s1.top()])
+            s1.push(i++);
+            else
+            {
+                tp=s1.top();
+                s1.pop();
+                area=(arr[tp])*(s1.empty()?i:i-s1.top()-1);
+                if(area>max_area)
+                max_area=area;
+            }
+        }
+        while(!s1.empty())
+        {
+                tp=s1.top();
+                s1.pop();
+                area=(arr[tp])*(s1.empty()?i:i-s1.top()-1);
+                if(area>max_area)
+                max_area=area;
+        }
+        cout<<max_area<<endl;
+    }
+    return(0);
+}
