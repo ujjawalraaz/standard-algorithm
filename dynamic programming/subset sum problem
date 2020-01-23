@@ -1,0 +1,60 @@
+
+
+//qs link:https://practice.geeksforgeeks.org/problems/subset-sum-problem/0
+
+
+
+#include<iostream>
+#include<algorithm>
+#define ll long long int
+using namespace std;
+
+
+
+int main()
+{
+    ll t;
+    cin>>t;
+    while(t--)
+    {
+        ll n;
+        cin>>n;
+        ll arr[n];
+        ll sum=0;
+        for(int i=0;i<n;i++){
+        cin>>arr[i];
+        sum=sum+arr[i];
+        }
+       // cout<<sum<<endl;
+        if(sum%2!=0)
+        {
+            cout<<"NO"<<endl;
+            continue;
+        }
+        ll k=sum/2;
+     /*   if(fun(arr,n-1,k))
+        cout<<"YES"<<endl;
+        else
+        cout<<"NO"<<endl;*/
+        bool subset[n+1][k+1];
+        for(int i=0;i<=n;i++)
+        subset[i][0]=true;
+        for(int i=1;i<=k;i++)
+        subset[0][i]=false;
+        for(int i=1;i<=n;i++)
+        {
+            for(int j=1;j<=k;j++)
+            {
+                if(arr[i-1]>j)
+                subset[i][j]=subset[i-1][j];
+                else
+                subset[i][j]=subset[i-1][j]||subset[i-1][j-arr[i-1]];
+            }
+        }
+        if(subset[n][k]==true)
+        cout<<"YES"<<endl;
+        else
+        cout<<"NO"<<endl;
+    }
+    return(0);
+}
