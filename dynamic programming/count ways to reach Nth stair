@@ -1,0 +1,40 @@
+
+//qs link:https://practice.geeksforgeeks.org/problems/count-ways-to-reach-the-nth-stair/0
+
+#include<iostream>
+#define ll long long int
+using namespace std;
+ll m=1e9+7;
+ll stair(ll n,ll dp[])
+{
+    if(n>=0&&dp[n]!=-1)
+    return(dp[n]);
+    else{
+    if(n<0)
+    return(0);
+    if(n==0)
+    {
+        dp[n]=1;
+        return(dp[n]);
+    }
+    dp[n]=(stair(n-1,dp)+stair(n-2,dp))%m;
+    return(dp[n]);
+    }
+}
+
+int main()
+{
+    ll dp[100005];
+    for(int i=0;i<=100004;i++)
+    dp[i]=-1;
+    ll ans=stair(100000,dp);
+    ll t;
+    cin>>t;
+    while(t--)
+    {
+        ll n;
+        cin>>n;
+        cout<<dp[n]<<endl;
+    }
+    return(0);
+}
