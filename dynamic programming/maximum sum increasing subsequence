@@ -1,0 +1,33 @@
+
+
+//qs link:https://practice.geeksforgeeks.org/problems/maximum-sum-increasing-subsequence/0
+
+#include<iostream>
+#define ll long long int
+using namespace std;
+int main()
+{
+    ll t;
+    cin>>t;
+    while(t--)
+    {
+        ll n;
+        cin>>n;
+        ll arr[n];
+        for(ll i=0;i<n;i++)
+        cin>>arr[i];
+        ll temp[n];
+        for(ll i=0;i<n;i++)
+        {
+            temp[i]=arr[i];
+            for(ll j=0;j<i;j++)
+            if(arr[j]<arr[i]&&temp[i]<temp[j]+arr[i])
+            temp[i]=temp[j]+arr[i];
+        }
+        ll max1=0;
+        for(ll i=0;i<n;i++)
+        if(temp[i]>max1)
+        max1=temp[i];
+        cout<<max1<<endl;
+    }
+}
