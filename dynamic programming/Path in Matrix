@@ -1,0 +1,48 @@
+
+
+//qs link:https://practice.geeksforgeeks.org/problems/path-in-matrix/0
+
+#include<iostream>
+#define ll long long int
+using namespace std;
+ll arr[25][25];
+ll N;
+ll dp[25][25];
+ll max(ll a,ll b,ll c)
+{
+    return(max(a,max(b,c)));
+}
+ll func(ll r,ll c)
+{
+    if(c<0||c>=N)
+    return(0);
+    if(dp[r][c]!=-1)
+    return(dp[r][c]);
+    else{
+    if(r==N-1)
+    return(dp[r][c]=arr[N-1][c]);
+    else
+    return(dp[r][c]=arr[r][c]+max(func(r+1,c-1),func(r+1,c),func(r+1,c+1)));}
+}
+int main()
+{
+    ll t;
+    cin>>t;
+    while(t--)
+    {
+        cin>>N;
+        for(ll i=0;i<N;i++)
+        for(ll j=0;j<N;j++){
+        cin>>arr[i][j];
+        dp[i][j]=-1;}
+        ll m1=-1e16;
+        for(ll i=0;i<N;i++)
+        {
+            ll res=func(0,i);
+            if(res>m1)
+            m1=res;
+        }
+        cout<<m1<<endl;
+    }
+    return(0);
+}
