@@ -1,0 +1,71 @@
+
+
+//qs link:https://practice.geeksforgeeks.org/problems/count-all-possible-paths-from-top-left-to-bottom-right/0
+
+*****Top Down Approach*****
+
+#include<iostream>
+#define ll long long int
+using namespace std;
+ll M;
+ll N;
+ll dp[105][105];
+ll m=1e9+7;
+ll countPath(ll r,ll c)
+{
+    if(r>=M||c>=N)
+    return(0);
+    if(r==M-1&&c==N-1)
+    return(1);
+    if(dp[r][c]!=-1)
+    return(dp[r][c]);
+    else
+    return(dp[r][c]=(countPath(r+1,c)+countPath(r,c+1))%m);
+}
+
+int main()
+{
+    ll t;
+    cin>>t;
+    while(t--)
+    {
+        cin>>M>>N;
+        for(ll i=0;i<=M;i++)
+        for(ll j=0;j<=N;j++)
+        dp[i][j]=-1;
+        ll res=countPath(0,0);
+        cout<<res<<endl;
+    }
+    return(0);
+}
+
+
+
+*****Bottum Up Approach*****
+
+
+#include<iostream>
+#define ll long long int
+using namespace std;
+ll M;
+ll N;
+ll dp[105][105];
+ll m=1e9+7;
+
+int main()
+{
+    ll t;
+    cin>>t;
+    while(t--)
+    {
+        cin>>M>>N;
+        for(ll i=0;i<=M;i++)
+        for(ll j=0;j<=N;j++)
+        dp[i][j]=1;
+        for(ll i=1;i<M;i++)
+        for(ll j=1;j<N;j++)
+        dp[i][j]=(dp[i-1][j]+dp[i][j-1])%m;
+        cout<<dp[M-1][N-1]<<endl;
+    }
+    return(0);
+}
