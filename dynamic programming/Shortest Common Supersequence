@@ -1,0 +1,57 @@
+
+
+//qs link:https://practice.geeksforgeeks.org/problems/shortest-common-supersequence/0
+
+
+#include<iostream>
+#define ll long long int
+using namespace std;
+ll N,M;
+string str;
+string str1;
+ll dp[105][105];
+
+ll func(ll i,ll j)
+{
+    if(dp[i][j]!=-1)
+    return(dp[i][j]);
+    else{
+    if(j==M)
+    return(dp[i][j]=0);
+    if(i==N)
+    return(dp[i][j]=M-j);
+    if(str[i]==str1[j])
+    return(dp[i][j]=func(i+1,j+1));
+    else
+    return(dp[i][j]=min(1+func(i,j+1),func(i+1,j)));
+    }
+}
+
+int main()
+ {
+	//code
+	ll t;
+	cin>>t;
+	while(t--)
+	{
+	    cin>>str>>str1;
+	    N=str.size();
+	    M=str1.size();
+	    if(N>M)
+	    {
+	        string s=str;
+	        str=str1;
+	        str1=s;
+	        ll T=N;
+	        N=M;
+	        M=T;
+	    }
+	    for(ll i=0;i<=N;i++)
+	    for(ll j=0;j<=M;j++)
+	    dp[i][j]=-1;
+	    ll res=func(0,0);
+	 //   cout<<res<<endl;
+	    cout<<N+res<<endl;
+	}
+	return 0;
+}
