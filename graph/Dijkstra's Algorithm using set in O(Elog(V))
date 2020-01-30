@@ -1,0 +1,66 @@
+
+
+//qs link:https://codeforces.com/problemset/problem/20/C
+
+
+#include<iostream>
+#include<set>
+#include<vector>
+#define ll long long int
+using namespace std;
+vector<pair<ll,ll>> v1[100005];
+vector<ll> dist;
+vector<ll> parent;
+int main()
+{
+     ll n,m;
+     cin>>n>>m;
+     ll s,d,c;
+     while(m--)
+     {
+              cin>>s>>d>>c;
+              v1[s].push_back(make_pair(d,c));
+              v1[d].push_back(make_pair(s,c));
+     }
+     dist.resize(n+5,1e16);
+     parent.resize(n+5);
+     parent[1]=-1;
+     dist[1]=0;
+     set<pair<ll,ll>> s1;
+     s1.insert(make_pair(0,1));
+     while(!s1.empty())
+     {
+               pair<ll,ll> p1=*(s1.begin());
+               s1.erase(s1.begin());
+               ll u=p1.second;
+               for(ll i=0;i<v1[u].size();i++)
+               {
+                         ll v=v1[u][i].first;
+                         ll cost=v1[u][i].second;
+                         if(dist[v]>dist[u]+cost){
+                         if(dist[v]!=1e16)
+                         s1.erase(s1.find(make_pair(dist[v],v)));
+                         dist[v]=dist[u]+cost;
+                         parent[v]=u;
+                         s1.insert(make_pair(dist[v],v));
+                         }
+               }
+     }
+    // cout<<dist[n]<<endl;
+    if(dist[n]==1e16)
+    {
+              cout<<-1<<endl;
+              return(0);
+    }
+    vector<ll> ans;
+    ans.push_back(n);
+    while(parent[n]!=-1)
+    {
+              ans.push_back(parent[n]);
+              n=parent[n];
+    }
+    for(ll i=ans.size()-1;i>=0;i--)
+    cout<<ans[i]<<" ";
+    cout<<endl;
+     return(0);
+}
