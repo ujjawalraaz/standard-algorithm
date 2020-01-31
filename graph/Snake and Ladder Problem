@@ -1,0 +1,66 @@
+
+
+//qs link:https://practice.geeksforgeeks.org/problems/snake-and-ladder-problem/0
+
+#include<iostream>
+#include<unordered_map>
+#include<vector>
+#include<set>
+#define ll long long int
+using namespace std;
+int main()
+ {
+	//code
+	ll t;
+	cin>>t;
+	while(t--)
+	{
+	    ll n;
+	    cin>>n;
+	    unordered_map<ll,ll> umap;
+	    for(ll i=0;i<n;i++)
+	    {
+	        ll a,b;
+	        cin>>a>>b;
+	        umap[a]=b;
+	    }
+	    vector<ll> v1[31];
+	    for(ll i=1;i<=30;i++)
+	    {
+	        for(ll j=1;j<7;j++)
+	        {
+	            if(i+j<=30){
+	            if(umap.find(i+j)==umap.end())
+	            v1[i].push_back(i+j);
+	            else
+	            v1[i].push_back(umap[i+j]);}
+	        }
+	    }
+	    ll dist[31];
+	    for(ll i=0;i<=30;i++)
+	    dist[i]=1e15;
+	    dist[1]=0;
+	    set<pair<ll,ll>> s1;
+	    s1.insert(make_pair(0,1));
+	    while(!s1.empty())
+	    {
+	        pair<ll,ll> p1=*(s1.begin());
+	        s1.erase(s1.begin());
+	        ll u=p1.second;
+	        for(ll i=0;i<v1[u].size();i++)
+	        {
+	            ll v=v1[u][i];
+	            if(dist[v]>dist[u]+1)
+	            {
+	                
+	                if(dist[v]!=1e15)
+	                s1.erase(s1.find(make_pair(dist[v],v)));
+	                dist[v]=dist[u]+1;
+	                s1.insert(make_pair(dist[v],v));
+	            }
+	        }
+	    }
+	    cout<<dist[30]<<endl;
+	}
+	return 0;
+}
