@@ -1,0 +1,29 @@
+//duplicates should not be inserted....
+//qs link:https://practice.geeksforgeeks.org/problems/insert-a-node-in-a-bst/1
+
+
+Node* func(Node* root,int d)
+{
+    if(root==NULL)
+    {
+        Node* n1=new Node(d);
+        return(n1);
+    }
+    if(root->data<d)
+    root->right=func(root->right,d);
+    if(root->data>d)
+    root->left=func(root->left,d);
+    return(root);
+}
+  
+Node* insert(Node* node, int data)
+{
+    // Your code here
+    if(node==NULL)
+    {
+        Node* n1=new Node(data);
+        return(n1);
+    }
+    Node* n1=func(node,data);
+    return(node);
+}
