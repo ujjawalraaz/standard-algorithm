@@ -1,0 +1,22 @@
+
+
+//qs link:https://practice.geeksforgeeks.org/problems/check-for-bst/1
+
+
+void func(Node* root,vector<int> &v1)
+{
+    if(root==NULL)
+    return;
+    func(root->left,v1);
+    v1.push_back(root->data);
+    func(root->right,v1);
+}
+bool isBST(Node* root) {
+    // Your code here
+    vector<int> v1;
+    func(root,v1);
+    for(int i=1;i<v1.size();i++)
+    if(v1[i]<v1[i-1])
+    return(false);
+    return(true);
+}
