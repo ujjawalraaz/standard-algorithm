@@ -1,0 +1,25 @@
+
+
+//qs link:https://practice.geeksforgeeks.org/problems/merge-k-sorted-arrays/1
+
+
+
+int *mergeKArrays(int a[][N], int k)
+{
+//code here
+  int *output=new int[k*k];
+ priority_queue<int,vector<int>,greater<int> > pq;
+ for(int i=0;i<k;i++)
+ {
+     for(int j=0;j<k;j++)
+       pq.push(a[i][j]);
+ }
+ int p=0;
+ while(pq.empty()==0)
+ {
+     output[p]=(pq.top());
+     pq.pop();
+     p++;
+ }
+ return output;
+}
