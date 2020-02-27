@@ -1,0 +1,20 @@
+//qs link:https://practice.geeksforgeeks.org/problems/reverse-a-linked-list/1
+
+Node* reverseList(Node *head)
+{
+  // Your code here
+  Node *temp;
+  Node *temp1;
+  temp=head;
+  temp1=head;
+  Node *ptr=NULL;
+  while(temp->next!=NULL)
+  {
+      temp=temp->next;
+      temp1->next=ptr;
+      ptr=temp1;
+      temp1=temp;
+  }
+  temp->next=ptr;
+  return(temp);
+}
