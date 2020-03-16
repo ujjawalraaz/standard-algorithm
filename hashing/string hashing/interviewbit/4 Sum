@@ -1,0 +1,55 @@
+qs link:https://www.interviewbit.com/problems/4-sum/
+
+
+vector<vector<int> > Solution::fourSum(vector<int> &a, int n) {
+    set<int> s1;
+    vector<vector<int>> v2;
+    unordered_map<int,vector<pair<int,int>>> umap;
+    for(int i=1;i<a.size();i++)
+    {
+        for(int j=0;j<i;j++)
+        {
+            int s=a[i]+a[j];
+            if(umap[n-s].size()!=0)
+            {
+               int s2=umap[n-s].size();
+               for(int k=0;k<s2;k++)
+               {
+                   s1.insert(i);
+                   s1.insert(j);
+                   pair<int,int> p1=umap[n-s].at(k);
+                   s1.insert(p1.first);
+                   s1.insert(p1.second);
+                   if(s1.size()==4)
+                   {
+                       vector<int> v;
+                       v.push_back(a[i]);
+                       v.push_back(a[j]);
+                       v.push_back(a[p1.first]);
+                       v.push_back(a[p1.second]);
+                       sort(v.begin(),v.end());
+                       v2.push_back(v);
+                   }
+                   s1.clear();
+               }
+            }
+            pair<int,int> p2;
+            p2.first=i;
+            p2.second=j;
+            umap[s].push_back(p2);
+        }
+    }
+       set<vector<int>> s;
+    for(int i=0;i<v2.size();i++)
+    {
+      vector<int> v=v2.at(i);
+      s.insert(v);
+    }
+    v2.clear();
+    for(auto it=s.begin();it!=s.end();++it)
+    {
+        vector<int> v=*it;
+        v2.push_back(v);
+    }
+    return(v2);
+}
