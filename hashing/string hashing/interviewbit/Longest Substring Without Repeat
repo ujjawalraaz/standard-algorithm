@@ -1,0 +1,29 @@
+//qs link:https://www.interviewbit.com/problems/longest-substring-without-repeat/
+
+int Solution::lengthOfLongestSubstring(string str) {
+    unordered_map<char,vector<int>> umap;
+   int m1=0;
+   int start=0;
+   int n=str.size();
+   for(int i=0;i<n;i++)
+   {
+    if(umap.find(str[i])==umap.end())
+    {
+      umap[str[i]].push_back(i);
+      m1=max(m1,i-start);
+    }
+    else
+    {
+      int cur=umap[str[i]].at(umap[str[i]].size()-1);
+      if(cur<start)
+        m1=max(m1,i-start);
+      else
+      {
+        start=cur+1;
+        m1=max(m1,i-start);
+      }
+      umap[str[i]].push_back(i);
+    }
+   }
+   return(m1+1);
+}
