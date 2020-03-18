@@ -1,0 +1,69 @@
+//qs link:https://codeforces.com/contest/1324/problem/E
+
+  
+ 
+/****************************************************
+             code from scratch...
+      created by ujjawal_singh on dated 16/03/2020
+
+              
+***************************************************** */
+  
+#include<bits/stdc++.h>
+#include<iostream>
+#include<algorithm>
+#define ll long long int
+#define ip(n) cin>>n;
+#define ipn() ll n;ip(n);ll arr[n];for(int i=0;i<n;i++)ip(arr[i])
+#define fo(i, a, b) for (int i = (a); i < int(b); i++)
+#define rfo(i, a, b) for (int i = (a); i > int(b); i--)
+#define rep(i, n) fo(i, 0, n)
+#define rrep(i, n) rfo(i, n-1, 0) 
+#define pr1(n) cout<<n<<endl
+#define pr2(a,b) cout<<a<<" "<<b<<endl
+#define io ios_base::sync_with_stdio(false), cin.tie(NULL)
+using namespace std;
+ll k;
+void build()
+{
+    
+}
+
+int main()
+{
+  io;
+  ll n,h,l,r;
+  ip(n);ip(h);ip(l);ip(r);
+  ll arr[n];
+  for(int i=0;i<n;i++)
+    ip(arr[i]);
+  ll dp[n+1][n+1];
+  for(int i=0;i<=n;i++)
+    for(int j=0;j<=n;j++)
+      dp[i][j]=INT_MIN;
+  dp[0][0]=0;
+  ll s=0;
+  for(int i=0;i<n;i++)
+  {
+    s=s+arr[i];
+    for(int j=0;j<=i;j++)
+    {
+      int r1=(s-j)%h;
+      int c=0;
+      if(r1>=l&&r1<=r)
+        c=1;
+      int c1=0;
+      r1=(s-j-1)%h;
+      if(r1>=l&&r1<=r)
+        c1=1;
+      dp[i+1][j]=max(dp[i][j]+c,dp[i+1][j]);
+      dp[i+1][j+1]=max(dp[i][j]+c1,dp[i+1][j+1]);
+    }
+  }
+  int m1=0;
+  for(int i=0;i<=n;i++)
+    if(dp[n][i]>m1)
+      m1=dp[n][i];
+  cout<<m1<<endl;
+  return(0);
+}  
