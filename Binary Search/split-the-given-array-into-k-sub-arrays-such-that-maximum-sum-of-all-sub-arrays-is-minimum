@@ -1,0 +1,82 @@
+
+//link:https://www.geeksforgeeks.org/split-the-given-array-into-k-sub-arrays-such-that-maximum-sum-of-all-sub-arrays-is-minimum
+
+
+   
+ 
+/****************************************************
+             code from scratch...
+      created by ujjawal_singh on dated 23/03/2020
+ 
+              
+***************************************************** */
+  
+#include<bits/stdc++.h>
+#include<iostream>
+#include<algorithm>
+#define ll long long int
+#define ip(n) cin>>n;
+#define ipn() ll n;ip(n);ll arr[n];for(int i=0;i<n;i++)ip(arr[i])
+#define fo(i, a, b) for (int i = (a); i < int(b); i++)
+#define rfo(i, a, b) for (int i = (a); i > int(b); i--)
+#define rep(i, n) fo(i, 0, n)
+#define rrep(i, n) rfo(i, n-1, 0) 
+#define pr1(n) cout<<n<<endl
+#define pr2(a,b) cout<<a<<" "<<b<<endl
+#define io ios_base::sync_with_stdio(false), cin.tie(NULL)
+using namespace std;
+ll n;
+ll k;
+void build()
+{
+    
+}
+bool check(ll mid,ll arr[])
+{
+  ll count=0,sum=0;
+  for(ll i=0;i<n;i++)
+  {
+    if(arr[i]>mid)
+      return(false);
+    if(sum+arr[i]>mid)
+    {
+      count++;
+      sum=arr[i];
+    }
+    else
+      sum=sum+arr[i];
+  }
+  count++;
+  if(count<=k)
+    return(true);
+  else
+    return(false);
+}
+int main()
+{
+  io;
+  //ll n,k;
+  ll t;
+  ip(t);
+  while(t--){
+  ip(n);ip(k);
+  ll arr[n];
+  for(ll i=0;i<n;i++)
+    ip(arr[i]);
+  ll low=1;
+  ll high=0;
+  rep(i,n)
+  high=high+arr[i];
+  ll mid;
+  while(low<=high)
+  {
+    mid=low+(high-low)/2;
+    if(check(mid,arr))
+      high=mid-1;
+    else
+      low=mid+1;
+  }
+  cout<<low<<endl;
+}
+  return(0);
+}
