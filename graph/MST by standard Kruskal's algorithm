@@ -1,0 +1,70 @@
+//spoj problem
+//qs link:https://www.spoj.com/problems/IITKWPCG/
+
+#include<iostream>
+#include<vector>
+#include<math.h>
+#include<algorithm>
+#define ll long long int
+using namespace std;
+ll find(ll n,ll parent[])
+{
+	if(parent[n]!=n)
+		return(parent[n]=find(parent[n],parent));
+	return(n);
+}
+void Union(ll parent[],ll rank[],ll a,ll b)
+{
+	ll pa=find(a,parent);
+	ll pb=find(b,parent);
+	if(pa==pb)
+		return;
+	if(rank[pa]>rank[pb])
+		parent[pb]=pa;
+	else
+	{
+		parent[pa]=pb;
+		if(rank[pa]==rank[pb])
+			rank[pb]=rank[pb]+1;
+	}
+}
+int main()
+{
+	ll t;
+	cin>>t;
+	while(t--)
+	{
+		ll n,m;
+		cin>>n>>m;
+		vector<pair<ll,pair<ll,ll>>> v1;
+		for(ll i=0;i<m;i++)
+		{
+			ll p,q,r;
+			cin>>p>>q>>r;
+			v1.push_back(make_pair(r,make_pair(p,q)));
+		}
+		ll sum=0;
+		ll parent[n+1];
+		ll rank[n+1];
+		for(ll i=0;i<=n;i++)
+		{
+		    parent[i]=i;
+		    rank[i]=1;
+		}
+		sort(v1.begin(),v1.end());
+		for(ll i=0;i<m;i++)
+		{
+			ll a=v1[i].second.first;
+			ll b=v1[i].second.second;
+			if(find(a,parent)==find(b,parent))
+				continue;
+			else
+			{
+				Union(parent,rank,a,b);
+                sum=sum+log2(v1[i].first);
+			}
+		}
+		cout<<sum+1<<endl;
+	}
+	return(0);
+}
