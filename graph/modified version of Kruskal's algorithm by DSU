@@ -1,0 +1,73 @@
+
+//spoj problem
+
+//qs link:https://www.spoj.com/problems/MARYBMW/
+
+#include<iostream>
+#include<vector>
+#include<algorithm>
+#define ll long long int
+using namespace std;
+ll find(ll n,ll parent[])
+{
+	if(parent[n]!=n)
+      return(parent[n]=find(parent[n],parent));
+    return(n);
+}
+
+void Union(ll a,ll b,ll parent[],ll rank[])
+{
+	ll pa=find(a,parent);
+	ll pb=find(b,parent);
+	if(pa==pb)
+		return;
+	if(rank[pa]>rank[pb])
+		parent[pb]=pa;
+	else
+	{
+		parent[pa]=pb;
+		if(rank[pa]==rank[pb])
+			rank[pb]=rank[pb]+1;
+	}
+}
+
+int main()
+{
+	ll t;
+	ios_base::sync_with_stdio(false), cin.tie(NULL);
+	cin>>t;
+	while(t--)
+	{
+		ll n,m;
+		cin>>n>>m;
+        vector<pair<ll,pair<ll,ll>>> v1;
+        for(ll i=0;i<m;i++)
+        {
+        	ll p,q,r;
+        	cin>>p>>q>>r;
+        	v1.push_back(make_pair(r,make_pair(p,q)));
+        }
+        ll ans=-1;
+        ll parent[n+1];
+        ll rank[n+1];
+        for(ll i=0;i<=n;i++)
+        {
+        	parent[i]=i;
+        	rank[i]=1;
+        }
+        sort(v1.rbegin(),v1.rend());
+        for(ll i=0;i<m;i++)
+        {
+        	ll a=v1[i].second.first;
+        	ll b=v1[i].second.second;
+        	Union(a,b,parent,rank);
+        	if(find(1,parent)==find(n,parent))
+        	{
+        		ans=v1[i].first;
+        		break;
+        	}
+        }
+        cout<<ans<<endl;
+	}
+	return(0);
+}
