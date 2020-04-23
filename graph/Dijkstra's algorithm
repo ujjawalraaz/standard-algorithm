@@ -65,3 +65,44 @@ int main()
       printf("-1");  
     return(0);
 }
+
+
+
+
+//BY implementing Priority queue...
+
+
+ll shortest_path(ll src,ll dest,ll n,vector<pair<ll,ll>> v1[])
+{
+	priority_queue<pair<ll,ll>,vector<pair<ll,ll>>,greater<pair<ll,ll>>> p1;
+	p1.push(make_pair(0,src));
+	ll dist[n+1];
+	for(ll i=0;i<=n;i++)
+	dist[i]=INT_MAX;
+	dist[src]=0;
+	while(!p1.empty())
+	{
+		//pair<ll,ll> temp=p1.top();
+        ll u=p1.top().second;
+        ll co=p1.top().first;
+        p1.pop();
+      //  cout<<"ujjawal"<<endl;
+        if(co!=dist[u])
+        	continue;
+        if(u==dest)
+        return(dist[u]);
+    //    cout<<"mdcewl"<<endl;
+        for(ll i=0;i<v1[u].size();i++)
+        {
+      //      cout<<"cc"<<endl; 
+            pair<ll,ll> p2=v1[u][i];
+            ll v=p2.second;
+            ll cost=p2.first;
+            if(dist[v]>dist[u]+cost){
+            	dist[v]=dist[u]+cost;
+            	p1.push(make_pair(dist[v],v));
+            }
+        }
+	}
+}
+
