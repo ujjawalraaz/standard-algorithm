@@ -1,0 +1,36 @@
+//qs link:https://practice.geeksforgeeks.org/problems/palindromic-strings/0
+
+#include<bits/stdc++.h>
+#include<iostream>
+using namespace std;
+string str;
+int dp[105][105];
+int func(int i,int j)
+{
+    if(i>j)
+    return(0);
+    if(dp[i][j]!=-1)
+    return(dp[i][j]);
+    if(str[i]==str[j])
+    return(dp[i][j]=func(i+1,j-1));
+    else
+    return(dp[i][j]=1+min(func(i,j-1),func(i+1,j)));
+}
+int main()
+{
+    int t;
+    cin>>t;
+    while(t--)
+    {
+        int n,k;
+        cin>>n>>k;
+        cin>>str;
+        memset(dp,-1,sizeof(dp));
+        int ans=func(0,n-1);
+        if(k>=ans)
+        cout<<"YES"<<endl;
+        else
+        cout<<"NO"<<endl;
+    }
+    return(0);
+}
